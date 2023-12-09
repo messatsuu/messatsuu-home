@@ -5,7 +5,6 @@
         <title>Playground</title>
         {% block stylesheets %}
             <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}" type="text/css">
-            {# <link rel="stylesheet" href="{{ asset('fontawesome/css/all.css') }}" type="text/css"> #}
         {% endblock %}
 
         {% block javascript %}
@@ -17,12 +16,12 @@
             {% block navbar %}
                 <nav class="px-2 mb-12 border-b-2 border-gray-800 rounded bg-gray-800/60 transition-colors hover:bg-gray-900 opacity-90">
                     <div class="container flex flex-wrap items-center justify-between mx-auto">
-                        <a href="{{ path('app_home') }}" class="text-2xl font-semibold link-hover">messatsuu</a>
-                        <a class="text-lg link-hover" href="{{ path('app_blog') }}">blog</a>
+                        <a href="{{ path('app_home') }}" class="text-2xl font-bold link-hover">messatsuu</a>
+                        <a class="text-lg link-hover font-semibold" href="{{ path('app_blog') }}">blog</a>
                     </div>
                 </nav>
             {% endblock %}
-            <div class="w-full mx-auto px-60">
+            <div class="w-full mx-auto 2xl:px-60">
                 {% block content %}
                     {% block base_header %}
                     {% endblock %}
