@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+    .default-button {
+        @apply inline-block px-5 mb-2 mr-2 text-white bg-gray-800 rounded-lg py-2.5 transition-colors hover:bg-cherry;
+    }
+}
+
+.required::after {
+    content: " *";
+    color: gray;
+}
