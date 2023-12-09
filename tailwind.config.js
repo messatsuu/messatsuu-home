@@ -16,6 +16,10 @@ module.exports = {
         'mb-2'
     ],
     theme: {
+        fontFamily: {
+            'sans': ['Inter', 'sans-serif'],
+            'body': ['JetBrains Mono', 'monospace'],
+        },
         extend: {
             colors: {
                 "cherry": "#ca054d",

@@ -3,7 +3,7 @@ function whoAmI(params) {
 }
 
 function cat(params) {
-    let projectsContents = 'Visit my <a href="https://github.com/messatsuu" class="text-blue-500 underline">GitHub</a> to see my projects.'
+    let projectsContents = 'Visit my <a href="https://github.com/messatsuu" class="link">GitHub</a> to see my projects.'
     let aboutMeContents = 'My name is Messatsu. I am a web developer. Try running "neofetch" to get more information about me.';
 
     if (params.includes('aboutme')) {
@@ -31,7 +31,7 @@ function clear(params) {
 function neofetch(params) {
     return `
         <div class="p-8 rounded-md">
-          <h2 class="text-2xl font-bold mb-4">My Stack</h2>
+          <h2>My Stack</h2>
         <pre class="text-sky-400 tracking-tighter" style="font-family: 'JetBrains Mono'">
 
                            -"                        <span class="text-white">messatsuu@archlinux</span>
@@ -39,7 +39,7 @@ function neofetch(params) {
                          "ooo/                       <span class="text-gray-400">OS: Arch Linux x86_64</span> 
                         "+oooo:                      <span class="text-gray-400">Kernel: 6.1.64-1-lts</span> 
                        "+oooooo:                     <span class="text-gray-400">Editor: nvim 0.9.4</span>
-                       -+oooooo+:                    <span class="text-gray-400">Employer: <a href="https://cloudtec.ch" class="text-blue-500 underline">Cloudtec</a></span> 
+                       -+oooooo+:                    <span class="text-gray-400">Employer: <a href="https://cloudtec.ch" class="link">Cloudtec</a></span> 
                      "/:-:++oooo+:                   <span class="text-gray-400">Experience: Symfony, React, Vue.js</span> 
                     "/++++/+++++++:                  <span class="text-gray-400">Learning: nixOS, Rust, clang</span>  
                    "/++++++++++++++:                 <span class="text-gray-400">Host: 20H5006VMZ ThinkPad E570</span> 
@@ -55,24 +55,24 @@ function neofetch(params) {
          ."                                 "/                               
 
         </pre>
-          <h2 class="text-2xl font-bold mb-4">About Me</h2>
-          <p class="text-gray-400 mb-4">
+          <h2>About Me</h2>
+          <p>
             Hi, I'm messatsuu, a passionate developer with a love for creating web applications.<br/>My expertise lies in Symfony and Fullstack-Development. 
             Check out my projects on 
             <ul class="list-disc pl-6">
-              <li><a href="https://github.com/messatsuu" class="text-blue-500 underline">GitHub</a></li>
-              <li><a href="https://github.com/messatsuu" class="text-blue-500 underline">Mastadon</a></li>
-              <li><a href="https://github.com/messatsuu" class="text-blue-500 underline">Twitter</a></li>
-              <li><a href="https://github.com/messatsuu" class="text-blue-500 underline">Instagram</a></li>
+              <li><a href="https://github.com/messatsuu" class="link">GitHub</a></li>
+              <li><a href="https://github.com/messatsuu" class="link">Mastadon</a></li>
+              <li><a href="https://github.com/messatsuu" class="link">Twitter</a></li>
+              <li><a href="https://github.com/messatsuu" class="link">Instagram</a></li>
             </ul>
           </p>
-          <p class="text-gray-400 mt-6">
-            Explore more about me on my 
+          <p>
+            If you have any Ideas for Projects or Questions, feel free to contact me via <a class="link" href="discord.com">Discord</a>
             <ul class="list-disc pl-6">
-              <li><a href="#" class="text-blue-500 underline">personal website</a></li>
+              <li><a href="#" class="link">Personal Website</a></li>
             </ul>
           </p>
-          <p class="text-gray-400 mt-6">
+          <p>
             Test out the terminal! Type <span class="text-blue-500">help</span> to get a list of commands.
           </p>
         </div>
@@ -94,7 +94,7 @@ function mkdir(params) {
     if (params.length > 0) {
         return `mkdir: cannot create directory ‘${params[0]}’: Permission denied. Try running with sudo.`;
     } else {
-        return 'Usage: cd `directory`';
+        return 'Usage: mkdir `directory`';
     }
 }
 
