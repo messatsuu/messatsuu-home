@@ -26,6 +26,14 @@
             @apply text-blue-500 underline;
         }
     }
+    .carried {
+            &::before {
+                content: "[ ";
+            }
+            &::after {
+                content: " ]";
+            }
+        }
 }
 
 .required::after {
