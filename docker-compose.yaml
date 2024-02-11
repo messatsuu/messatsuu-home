@@ -8,5 +8,6 @@ services:
         # - seccomp:unconfined
         ports: 
             - "8000:80"
+            - "3600:3306"
         volumes:
             - ./:/var/www/html/

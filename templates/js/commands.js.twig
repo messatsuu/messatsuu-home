@@ -22,12 +22,19 @@ function listFiles(params) {
     return 'aboutme projects';
 }
 
+function env(params) {
+    return `
+        EDITOR=nvim<br/>
+        XDG_SESSION_TYPE=wayland
+    `;
+}
+
 function clear(params) {
     $("#output").html('');
     return '';
 }
 
-// Example command function
+// Neofetch, pasted twice for mobile/desktop view
 function neofetch(params) {
     return `
         <div class="p-8 rounded-md">

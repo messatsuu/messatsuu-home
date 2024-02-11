@@ -3,11 +3,11 @@
     <div id="terminal" class="text-sm md:text-lg">
         <div id="output">
         </div>
-        <div id="input" class="mb-20">
+        <div id="input" class="mb-20 flex flex-row gap-3">
            <span id="PS1">
-                <span class="text-green-300">[ messatuu<span class="text-sky-400">@archlinux ~ </span> ] </span>
+                <span class="text-green-300 carried"> messatuu<span class="text-sky-400">@archlinux ~ </span> </span>
             </span>
-           <input type="text" id="prompt" class="bg-transparent focus:outline-none caret-pink-500">
+           <input type="text" id="prompt" class="bg-transparent focus:outline-none caret-pink-500 w-3/5">
         </div>
     </div>
     <script>{% include("js/terminal.js.twig") %}</script>
