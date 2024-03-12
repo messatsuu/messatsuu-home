@@ -10,5 +10,11 @@
            <input type="text" id="prompt" class="bg-transparent focus:outline-none caret-pink-500 w-3/5">
         </div>
     </div>
-    <script>{% include("js/terminal.js.twig") %}</script>
+
+    {% block javascripts %}
+        {{ parent() }}
+        <script>
+            {% include("js/terminal.js.twig") %}
+        </script>
+    {% endblock %}
 {% endblock %}

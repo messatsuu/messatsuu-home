@@ -7,7 +7,7 @@
             <link rel="stylesheet" href="{{ asset('build/tailwind.css') }}" type="text/css">
         {% endblock %}
 
-        {% block javascript %}
+        {% block javascript_head %}
             <script src="{{ asset('build/main.js') }}"></script>
         {% endblock %}
     </head>
@@ -32,4 +32,6 @@
             </div>
         {% endblock %}
     </body>
+    {% block javascripts %}
+    {% endblock %}
 </html>

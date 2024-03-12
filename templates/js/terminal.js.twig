@@ -1,83 +1,76 @@
 document.addEventListener("DOMContentLoaded", function() {
-    function sleep(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-
-    function handleInput() {
-        let input = $("#prompt").val();
-        const [command, ...params] = input.trim().split(/\s+/);
-
-        const commands = {
-            'ls': () => listFiles(params),
-            'pwd': () => getCurrentDirectory(params),
-            'cd': () => changeDirectory(params),
-            'cat': () => cat(params),
-            'neofetch': () => neofetch(params),
-            'whoami': () => whoAmI(params),
-            'help': () => showHelp(params),
-            'clear': () => clear(params),
-            'nvim': () => echo(['$EDITOR']),
-            'echo': () => echo(params),
-            'sudo': () => sudo(params),
-            'mkdir': () => mkdir(params),
-            'env': () => env(params),
-            // 'mv': () => moveFile(params),
-            // 'rm': () => deleteFile(params),
-            // 'mkdir': () => createDirectory(params),
-        };
-
-        if (commands.hasOwnProperty(command.toLowerCase())) {
-            return commands[command.toLowerCase()]();
-        } else {
-            return `zsh: command not found: ${input}.<br/><br/> Type "help" for a list of commands.`;
-        }
-    }
-
-    {% include("js/commands.js.twig") %}
-
-    let prompt = $("#prompt");
-    prompt.keypress(async function(event) {
-        if(event.which == 13) {
-            await sleep(40);
-            let prompt = $("#prompt").val();
-            let PS1 = $("#PS1").html();
-
-            if (prompt === "") {
-                $("#output").append(`<div class="mb-2">${PS1} </div>`);
-            } else {
-                let output = handleInput();
-
-                $("#output").append(`<div class="mb-2">${PS1} ` + prompt + "</div>");
-                let outputElement = $('<div class="mb-2">').html(output).hide();
-                $("#output").append(outputElement);
-                outputElement.fadeIn(500);
-                $("#prompt").val("");
-            }
-
-            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 200);
-            $("#prompt").focus();
-        }
-    });
-
     // Initial text animation
-    var targetText = 'neofetch';
-    var currentIndex = 0;
+    let prompt = $("#prompt");
+    let PS1 = $("#PS1").html();
+    let commandHistory = {};
+    let commandIndex = 0;
+
+    let startupCommand = 'neofetch';
+    let currentIndex = 1;
 
     // Animate typing effect
     var typingInterval = setInterval(async function() {
-        var currentText = targetText.slice(0, currentIndex);
+        var currentText = startupCommand.slice(0, currentIndex);
         prompt.val(currentText);
 
         // stop the animation when the entire text is typed and press enter
-        if (currentIndex === targetText.length) {
+        if (currentIndex === startupCommand.length) {
             clearInterval(typingInterval);
-            var enterEvent = $.Event('keypress');
-            enterEvent.which = 13;
-
             await sleep(900);
-            prompt.trigger(enterEvent);
+            $("#prompt").trigger(($.Event('keydown', { which: 13 })));
         }
 
         currentIndex++;
     }, 100);
+
+    function sleep(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    {% include("js/commands.js.twig") %}
+
+    // TODO: gets assigned twice somehow...
+    prompt.off('keydown').keydown(async function(event) {
+        let prompt = $("#prompt");
+
+        // Up-/down-arrow key
+        if ([38, 40].includes(event.which)) {
+            localIndex = event.which === 38 ? -1 : +1;
+            commandFromHistory = commandHistory[commandIndex+localIndex];
+            // don't change the index of the history if index goes out of bounds
+            if (commandFromHistory === undefined) {
+                return
+            }
+            prompt.val(commandFromHistory);
+            // re-set commandIndex to be the same as state from history
+            commandIndex = commandIndex+localIndex;
+        }
+
+        // Enter key
+        if(event.which == 13) {
+            let userInput = prompt.val();
+            let output = $('#output');
+
+            output.append(`<div class="mb-2">${PS1} ` + userInput + "</div>");
+
+            if (userInput !== "") {
+                let commandOutput = handleInput();
+                let outputElement = $('<div class="mb-2">').html(commandOutput).hide();
+
+                output.append(outputElement);
+                outputElement.fadeIn(500);
+                prompt.val("");
+
+                let commandHistoryLength = Object.keys(commandHistory).length;
+                // only add command to history if the command exists and isn't the latest command in the history
+                if (!commandOutput.includes('command not found') && commandHistory[commandHistoryLength-1] !== userInput) {
+                    commandHistory[commandHistoryLength] = userInput;
+                    commandIndex = commandHistoryLength+1;
+                }
+            }
+
+            $("html, body").animate({ scrollTop: $(document).height()-$(window).height() }, 200);
+            prompt.focus();
+        }
+    });
 });

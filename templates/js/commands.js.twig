@@ -1,3 +1,34 @@
+function handleInput() {
+    let input = $("#prompt").val();
+    const [command, ...params] = input.trim().split(/\s+/);
+
+    const commands = {
+        'history': () => history(),
+        'ls': () => listFiles(params),
+        'pwd': () => getCurrentDirectory(params),
+        'cd': () => changeDirectory(params),
+        'cat': () => cat(params),
+        'neofetch': () => neofetch(params),
+        'whoami': () => whoAmI(params),
+        'help': () => showHelp(params),
+        'clear': () => clear(params),
+        'nvim': () => echo(['$EDITOR']),
+        'echo': () => echo(params),
+        'sudo': () => sudo(params),
+        'mkdir': () => mkdir(params),
+        'env': () => env(params),
+        // 'mv': () => moveFile(params),
+        // 'rm': () => deleteFile(params),
+        // 'mkdir': () => createDirectory(params),
+    };
+
+    if (commands.hasOwnProperty(command.toLowerCase())) {
+        return commands[command.toLowerCase()]();
+    } else {
+        return `zsh: command not found: ${input.split(" ")[0]}.<br/><br/> Type "help" for a list of commands.`;
+    }
+}
+
 function whoAmI(params) {
     return 'user';
 }
@@ -16,6 +47,15 @@ function cat(params) {
         return aboutMeContents + '<br/><br/>' + projectsContents;
     }
     return "Usage: cat `filename`";
+}
+
+function history() {
+    let historyOutput = "<ul>";
+    for (const key in commandHistory){
+        historyOutput += `<li>${parseInt(key)+1} ${commandHistory[key]}</li>`;
+    }
+    historyOutput += "</ul>"
+    return historyOutput;
 }
 
 function listFiles(params) {
@@ -162,8 +202,7 @@ function changeDirectory(params) {
     }
 }
 
-// Example command function
 function showHelp(params) {
-    return 'Available commands: ls, pwd, cd, cat, echo, whoami, clear, nvim, sudo, help<br/><br/>env-vars: $EDITOR $XDG_SESSION_TYPE';
+    return 'Available commands: ls, pwd, cd, cat, echo, whoami, clear, nvim, neofetch, history, help<br/><br/>env-vars: $EDITOR $XDG_SESSION_TYPE';
 }
 
