@@ -1,5 +1,3 @@
-version: '3'
-
 services:
     messatsuu:
         container_name: messatsuu-home
